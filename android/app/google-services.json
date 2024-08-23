@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "36726489047",
+    "project_id": "quickbib-2798f",
+    "storage_bucket": "quickbib-2798f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:36726489047:android:f78fc211118c098febd592",
+        "android_client_info": {
+          "package_name": "com.exa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBrLaYCaSVm-r1xZLebWWPLa1cLhd4pV8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
