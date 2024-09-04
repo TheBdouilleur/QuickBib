@@ -25,20 +25,11 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for linux - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return linux;
       default:
         throw UnsupportedError(
           'DefaultFirebaseOptions are not supported for this platform.',
@@ -57,7 +48,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDBrLaYCaSVm-r1xZLebWWPLa1cLhd4pV8',
-    appId: '1:36726489047:android:f78fc211118c098febd592',
+    appId: '1:36726489047:android:f92135d11b562d58ebd592',
     messagingSenderId: '36726489047',
     projectId: 'quickbib-2798f',
     storageBucket: 'quickbib-2798f.appspot.com',
@@ -71,4 +62,32 @@ class DefaultFirebaseOptions {
     storageBucket: 'quickbib-2798f.appspot.com',
     iosBundleId: 'com.example.quickBib',
   );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyC6CM1QIg73NuME3pUnB5snk9gm2Ky273Q',
+    appId: '1:36726489047:ios:494cbc9dc6050665ebd592',
+    messagingSenderId: '36726489047',
+    projectId: 'quickbib-2798f',
+    storageBucket: 'quickbib-2798f.appspot.com',
+    iosBundleId: 'com.example.quickBib',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyAz-jx-7rpOA2wDsM66LlGni7XvNJVeKXE',
+    appId: '1:36726489047:web:548f5769bb649ff4ebd592',
+    messagingSenderId: '36726489047',
+    projectId: 'quickbib-2798f',
+    authDomain: 'quickbib-2798f.firebaseapp.com',
+    storageBucket: 'quickbib-2798f.appspot.com',
+  );
+
+  static const FirebaseOptions linux = FirebaseOptions(
+    apiKey: "AIzaSyAz-jx-7rpOA2wDsM66LlGni7XvNJVeKXE",
+    appId: "1:36726489047:web:ea3fc8dfecd3e78cebd592",
+    messagingSenderId: "36726489047",
+    projectId: "quickbib-2798f",
+    authDomain: "quickbib-2798f.firebaseapp.com",
+    storageBucket: "quickbib-2798f.appspot.com",
+  );
+  
 }
