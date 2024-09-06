@@ -1,17 +1,19 @@
+/// Stale archive of what used to be main
+/// un-compatible compile error code has been commented out
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-import 'database.dart';
+// import 'database.dart';
 
 void main() async {
-  BookDB bdb = BookDB.instance;
+  // StatefulBookDB bdb = StatefulBookDB.instance;
   WidgetsFlutterBinding.ensureInitialized();
-  await bdb.ensureInitialized();
+  // await bdb.ensureInitialized();
 
-  print(await bdb.books());
-  BookDB.instance.insertBook(Book.withIsbn(isbn13: 9791035807191));
-  print(await bdb.books());
+  // print(await bdb.books());
+  // StatefulBookDB.instance.insertBook(Book.withIsbn(isbn13: 9791035807191));
+  // print(await bdb.books());
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

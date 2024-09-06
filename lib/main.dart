@@ -3,34 +3,34 @@ import 'package:provider/provider.dart';
 import 'package:english_words/english_words.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 import 'database.dart';
 
 void main() async {
-  BookDB bdb = BookDB.instance;
   WidgetsFlutterBinding.ensureInitialized();
-  await bdb.ensureInitialized();
 
-  print(await bdb.books());
-  BookDB.instance.insertBook(Book.withIsbn(isbn13: 9791035807191));
-  print(await bdb.books());
+  // print(await bdb.books());
+  // bdb.insertBook(Book.withIsbn(isbn13: 9791035807191));
+  // print(await bdb.books());
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  runApp(const QuickBib());
+  print('Huh seems synchronous doesn\'t it?');
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class QuickBib extends StatelessWidget {
+  const QuickBib({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => MyAppState(),
+      create: (context) => StatefulBookDB(initialize: true),
       child: MaterialApp(
-        title: 'Namer App',
+        title: 'QuickBib — Your personal bookbase !',
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
@@ -41,25 +41,20 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyAppState extends ChangeNotifier {
-  var current = WordPair.random();
+//dontpayattention
+// class QuickBibState extends ChangeNotifier {
+// BookDB bdb = BookDB.instance;
+//
+// void updateDB() {
+// current = WordPair.random();
+// notifyListeners();
+// }
 
-  void getNext() {
-    current = WordPair.random();
-    notifyListeners();
-  }
-
-  var favorites = <WordPair>[];
-
-  void toggleFavorite() {
-    if (favorites.contains(current)) {
-      favorites.remove(current);
-    } else {
-      favorites.add(current);
-    }
-    notifyListeners();
-  }
-}
+// get books => bdb.books();
+//
+// void addBook()
+//
+// }
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -74,9 +69,9 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget page;
     switch (selectedIndex) {
       case 0:
-        page = GeneratorPage();
+        page = ScannerPage();
       case 1:
-        page = FavoritesPage();
+        page = BookBasePage();
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -90,12 +85,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 extended: constraints.maxWidth >= 600,
                 destinations: const [
                   NavigationRailDestination(
-                    icon: Icon(Icons.home),
-                    label: Text('Home'),
+                    icon: Icon(Symbols.document_scanner),
+                    label: Text('Scanner'),
                   ),
                   NavigationRailDestination(
-                    icon: Icon(Icons.favorite),
-                    label: Text('Favorites'),
+                    icon: Icon(Symbols.library_books),
+                    label: Text('Bookbase'),
                   ),
                 ],
                 selectedIndex: selectedIndex,
@@ -119,46 +114,40 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class GeneratorPage extends StatelessWidget {
+class ScannerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-    var pair = appState.current;
+    var appState = context.watch<StatefulBookDB>();
 
-    IconData icon;
-    if (appState.favorites.contains(pair)) {
-      icon = Icons.favorite;
-    } else {
-      icon = Icons.favorite_border;
+    // appState.insertBook(Book.sample);
+    return const Center(child: Text('No input method for the moment'));
+  }
+}
+
+class BookBasePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<StatefulBookDB>();
+    print("Appstate changed, got updated");
+    if (appState.books.isEmpty) {
+      return const Center(
+        child: Text('No books yet.'),
+      );
     }
 
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          BigCard(pair: pair),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  appState.toggleFavorite();
-                },
-                icon: Icon(icon),
-                label: const Text('Like'),
-              ),
-              const SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: () {
-                  appState.getNext();
-                },
-                child: const Text('Next'),
-              ),
-            ],
+    return ListView(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: Text('You have '
+              '${appState.books.length} books in the library:'),
+        ),
+        for (var book in appState.books)
+          ListTile(
+            leading: const Icon(Symbols.book_2),
+            title: Text(book.title),
           ),
-        ],
-      ),
+      ],
     );
   }
 }
@@ -188,34 +177,6 @@ class BigCard extends StatelessWidget {
           semanticsLabel: "${pair.first} ${pair.second}",
         ),
       ),
-    );
-  }
-}
-
-class FavoritesPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-
-    if (appState.favorites.isEmpty) {
-      return const Center(
-        child: Text('No favorites yet.'),
-      );
-    }
-
-    return ListView(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(20),
-          child: Text('You have '
-              '${appState.favorites.length} favorites:'),
-        ),
-        for (var pair in appState.favorites)
-          ListTile(
-            leading: const Icon(Icons.favorite),
-            title: Text(pair.asLowerCase),
-          ),
-      ],
     );
   }
 }
