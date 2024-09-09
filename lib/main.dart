@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:english_words/english_words.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
+
+import 'barcode_scanner_simple.dart';
 
 import 'database.dart';
 
@@ -19,7 +20,7 @@ void main() async {
   );
 
   runApp(const QuickBib());
-  print('Huh seems synchronous doesn\'t it?');
+  print('Huh seems a-synchronous in fact');
 }
 
 class QuickBib extends StatelessWidget {
@@ -120,7 +121,9 @@ class ScannerPage extends StatelessWidget {
     var appState = context.watch<StatefulBookDB>();
 
     // appState.insertBook(Book.sample);
-    return const Center(child: Text('No input method for the moment'));
+    // return const Center(child: Text('No input method for the moment'));
+    // builder: (context) => BarcodeScannerWithOverlay(),
+    return const BarcodeScannerSimple();
   }
 }
 
@@ -152,31 +155,31 @@ class BookBasePage extends StatelessWidget {
   }
 }
 
-class BigCard extends StatelessWidget {
-  const BigCard({
-    super.key,
-    required this.pair,
-  });
-
-  final WordPair pair;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final style = theme.textTheme.displayMedium!.copyWith(
-      color: theme.colorScheme.onPrimary,
-    );
-
-    return Card(
-      color: theme.colorScheme.primary,
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Text(
-          pair.asLowerCase,
-          style: style,
-          semanticsLabel: "${pair.first} ${pair.second}",
-        ),
-      ),
-    );
-  }
-}
+// class BigCard extends StatelessWidget {
+  // const BigCard({
+    // super.key,
+    // required this.pair,
+  // });
+//
+  // final WordPair pair;
+//
+  // @override
+  // Widget build(BuildContext context) {
+    // final theme = Theme.of(context);
+    // final style = theme.textTheme.displayMedium!.copyWith(
+      // color: theme.colorScheme.onPrimary,
+    // );
+//
+    // return Card(
+      // color: theme.colorScheme.primary,
+      // child: Padding(
+        // padding: const EdgeInsets.all(20),
+        // child: Text(
+          // pair.asLowerCase,
+          // style: style,
+          // semanticsLabel: "${pair.first} ${pair.second}",
+        // ),
+      // ),
+    // );
+  // }
+// }

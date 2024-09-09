@@ -29,7 +29,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.windows:
         return windows;
       case TargetPlatform.linux:
-        return linux;
+        return web;
       default:
         throw UnsupportedError(
           'DefaultFirebaseOptions are not supported for this platform.',
@@ -89,5 +89,4 @@ class DefaultFirebaseOptions {
     authDomain: "quickbib-2798f.firebaseapp.com",
     storageBucket: "quickbib-2798f.appspot.com",
   );
-  
 }
